@@ -7,6 +7,12 @@ var Component = Class.$extend({
                 this.$el.on(parts[0], parts[1], this._makeEventHandler(this.$class.events[evt]));
             }
         }
+        if (!this.$class._loadedTemplate && !this.$class._templateLoader) {
+            var self = this;
+            this.$class._templateLoader = $.ajax("/static/js/site/templates/" + this.$class.template).done(function(data) {
+                self.$class._loadedTemplate = data;
+            });
+        }
     },
     _makeEventHandler: function(name) {
         var self = this;
@@ -18,9 +24,20 @@ var Component = Class.$extend({
         return extraData;
     },
     render: function(data) {
-        var self = this;
         data = this.getData(data || {});
-        new plate.Template(this.$class.template).render(data, function(err, data) {
+        if (!this.$class._loadedTemplate) {
+            var self = this;
+            this.$class._templateLoader.done(function() {
+                self._renderTemplate(data);
+            });
+        }
+        else {
+            this._renderTemplate(data);
+        }
+    },
+    _renderTemplate: function(data) {
+        var self = this;
+        new plate.Template(this.$class._loadedTemplate).render(data, function(err, data) {
             if (err) {
                 console.log(err);
             }
