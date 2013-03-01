@@ -7,7 +7,7 @@ var Component = Class.$extend({
                 this.$el.on(parts[0], parts[1], this._makeEventHandler(this.$class.events[evt]));
             }
         }
-        if (!this.$class._loadedTemplate && !this.$class._templateLoader) {
+        if (this.$class.template && !this.$class._loadedTemplate && !this.$class._templateLoader) {
             var self = this;
             this.$class._templateLoader = $.ajax("/static/js/site/templates/" + this.$class.template).done(function(data) {
                 self.$class._loadedTemplate = data;

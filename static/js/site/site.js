@@ -1,3 +1,10 @@
+utils = {
+    stopEvent: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+};
+
 $(function() {
     R.ready(function() {
         plate.Template.Meta.registerFilter("get", function(obj, fieldName) {
