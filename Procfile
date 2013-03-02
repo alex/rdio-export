@@ -1,1 +1,1 @@
-python -mSimpleHTTPServer $PORT
+web: python -mSimpleHTTPServer $PORT
