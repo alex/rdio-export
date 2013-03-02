@@ -93,7 +93,7 @@ App.Components.Export = Component.$extend({
             for (var idx in this.loaders) {
                 data[this.loaders[idx].$class.attrName] = this.loaders[idx].data;
             }
-            new App.Components.Download(this.$el, data).render();
+            new App.Components.Download(this.$el, this.user, data).render();
         }
     },
     onRendered: function() {
@@ -107,12 +107,14 @@ App.Components.Download = Component.$extend({
     __classvars__: {
         template: "download.html"
     },
-    __init__: function($el, data) {
+    __init__: function($el, user, data) {
         this.$super($el);
+        this.user = user;
         this.data = data;
     },
     getData: function(extraData) {
         return $.extend({
+            user: this.user,
             url: window.URL.createObjectURL(new Blob([JSON.stringify(this.data)]))
         }, extraData);
     }
