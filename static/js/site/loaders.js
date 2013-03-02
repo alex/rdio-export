@@ -1,4 +1,4 @@
-var Loaders = {};
+App.Loaders = {};
 
 var Loader = Class.$extend({
     __classvars__: {
@@ -10,7 +10,7 @@ var Loader = Class.$extend({
     }
 });
 
-Loaders.Playlists = Loader.$extend({
+App.Loaders.Playlists = Loader.$extend({
     __classvars__: {
         attrName: "playlists"
     },
@@ -45,7 +45,7 @@ Loaders.Playlists = Loader.$extend({
     }
 });
 
-Loaders.Collection = Loader.$extend({
+App.Loaders.Collection = Loader.$extend({
     __classvars__: {
         attrName: "collection"
     },

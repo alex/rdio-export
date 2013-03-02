@@ -1,6 +1,6 @@
-var Components = {};
+App.Components = {};
 
-Components.LogInComponent = Component.$extend({
+App.Components.LogInComponent = Component.$extend({
     __classvars__: {
         template: "log-in.html",
         events: {
@@ -8,10 +8,10 @@ Components.LogInComponent = Component.$extend({
         }
     },
     onLogInClicked: function(e) {
-        utils.stopEvent(e);
+        App.utils.stopEvent(e);
         R.authenticate(function(authenticated) {
             if (authenticated) {
-                new Components.StartExportComponent(this.$el, R.currentUser).render();
+                new App.Components.StartExportComponent(this.$el, R.currentUser).render();
             }
             else {
                 alert("You didn't log in. Why not? :(");
@@ -20,7 +20,7 @@ Components.LogInComponent = Component.$extend({
     }
 });
 
-Components.StartExportComponent = Component.$extend({
+App.Components.StartExportComponent = Component.$extend({
     __classvars__: {
         template: "start-export.html",
         events: {
@@ -37,11 +37,11 @@ Components.StartExportComponent = Component.$extend({
         }, extraData);
     },
     onExportClicked: function(e) {
-        utils.stopEvent(e);
+        App.utils.stopEvent(e);
         var options = [
-            ["playlists", Loaders.Playlists],
+            ["playlists", App.Loaders.Playlists],
             // ["playlists-contributed", null],
-            ["collection", Loaders.Collection]
+            ["collection", App.Loaders.Collection]
             // ["comments", null],
             // ["play-history", null]
         ];
@@ -53,11 +53,11 @@ Components.StartExportComponent = Component.$extend({
                 loaders.push(new loader(this.user));
             }
         }
-        new Components.Export(this.$el.find("#export-body"), this.user, loaders).render();
+        new App.Components.Export(this.$el.find("#export-body"), this.user, loaders).render();
     }
 });
 
-Components.Export = Component.$extend({
+App.Components.Export = Component.$extend({
     __classvars__: {
         template: "export.html"
     },
@@ -93,7 +93,7 @@ Components.Export = Component.$extend({
             for (var idx in this.loaders) {
                 data[this.loaders[idx].$class.attrName] = this.loaders[idx].data;
             }
-            new Components.Download(this.$el, data).render();
+            new App.Components.Download(this.$el, data).render();
         }
     },
     onRendered: function() {
@@ -103,7 +103,7 @@ Components.Export = Component.$extend({
     }
 });
 
-Components.Download = Component.$extend({
+App.Components.Download = Component.$extend({
     __classvars__: {
         template: "download.html"
     },

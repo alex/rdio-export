@@ -1,4 +1,4 @@
-utils = {
+App.utils = {
     stopEvent: function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -11,10 +11,10 @@ $(function() {
             return obj.get(fieldName);
         });
         if (R.authenticated()) {
-            new Components.StartExportComponent($("#body"), R.currentUser).render();
+            new App.Components.StartExportComponent($("#body"), R.currentUser).render();
         }
         else {
-            new Components.LogInComponent($("#body")).render();
+            new App.Components.LogInComponent($("#body")).render();
         }
     });
 });
