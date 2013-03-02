@@ -39,19 +39,21 @@ Components.StartExportComponent = Component.$extend({
     onExportClicked: function(e) {
         utils.stopEvent(e);
         var options = [
-            ["playlists"],
-            ["playlists-contributed"],
-            ["collection"],
-            ["comments"],
-            ["play-history"]
+            ["playlists", Loaders.Playlists],
+            // ["playlists-contributed", null],
+            ["collection", Loaders.Collection]
+            // ["comments", null],
+            // ["play-history", null]
         ];
-        var chosen = [];
-        for (var option in options) {
-            if (this.$el.children("#" + options[option]).is(":checked")) {
-                chosen.push(options[option]);
+        var loaders = [];
+        for (var idx in options) {
+            var name = options[idx][0];
+            var loader = options[idx][1];
+            if (this.$el.find("#" + name).is(":checked")) {
+                loaders.push(new loader(this.user));
             }
         }
-        new Components.Export(this.$el.children("#export-body"), this.user, options).render();
+        new Components.Export(this.$el.find("#export-body"), this.user, loaders).render();
     }
 });
 
@@ -59,15 +61,60 @@ Components.Export = Component.$extend({
     __classvars__: {
         template: "export.html"
     },
-    __init__: function($el, user, options) {
+    __init__: function($el, user, loaders) {
         this.$super($el);
         this.user = user;
-        this.options = options;
+        this.loaders = loaders;
+        this.loaded = 0;
+        this.total = 0;
+        this.finishedLoaders = 0;
     },
     getData: function(extraData) {
         return $.extend({
             user: this.user,
-            options: this.options
+            loaders: this.loaders
+        }, extraData);
+    },
+    _updateProgress: function() {
+        this.$el.find(".bar").css("width", (this.loaded / this.total) * 100 + "%");
+    },
+    updateLoaded: function(value) {
+        debugger;
+        this.loaded += value;
+        this._updateProgress();
+    },
+    updateTotal: function(value) {
+        this.total += value;
+        this._updateProgress();
+    },
+    finished: function() {
+        this.finishedLoaders += 1;
+        if (this.finishedLoaders == this.loaders.length) {
+            var data = {};
+            for (var idx in this.loaders) {
+                data[this.loaders[idx].$class.attrName] = this.loaders[idx].data;
+            }
+            new Components.Download(this.$el, data).render();
+        }
+    },
+    onRendered: function() {
+        for (var idx in this.loaders) {
+            this.loaders[idx].load(this);
+        }
+    }
+});
+
+Components.Download = Component.$extend({
+    __classvars__: {
+        template: "download.html"
+    },
+    __init__: function($el, data) {
+        this.$super($el);
+        this.data = data;
+    },
+    getData: function(extraData) {
+        return $.extend({
+            url: window.URL.createObjectURL(new Blob([JSON.stringify(this.data)]))
         }, extraData);
     }
 });

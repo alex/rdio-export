@@ -23,6 +23,7 @@ var Component = Class.$extend({
     getData: function(extraData) {
         return extraData;
     },
+    onRendered: function() {},
     render: function(data) {
         data = this.getData(data || {});
         if (!this.$class._loadedTemplate) {
@@ -43,6 +44,7 @@ var Component = Class.$extend({
             }
             else {
                 self.$el.html(data);
+                self.onRendered();
             }
         });
     }
