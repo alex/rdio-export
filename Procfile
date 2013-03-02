@@ -1,1 +1,1 @@
-web: python -mSimpleHTTPServer $PORT
+web: goldenarch
