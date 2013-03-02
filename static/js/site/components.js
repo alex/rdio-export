@@ -79,7 +79,6 @@ Components.Export = Component.$extend({
         this.$el.find(".bar").css("width", (this.loaded / this.total) * 100 + "%");
     },
     updateLoaded: function(value) {
-        debugger;
         this.loaded += value;
         this._updateProgress();
     },
