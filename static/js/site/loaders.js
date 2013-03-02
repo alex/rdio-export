@@ -10,10 +10,7 @@ var Loader = Class.$extend({
     }
 });
 
-App.Loaders.Playlists = Loader.$extend({
-    __classvars__: {
-        attrName: "playlists"
-    },
+var PlaylistLoader = Loader.$extend({
     load: function(component) {
         this._requestPlaylists(component, 0);
     },
@@ -23,7 +20,7 @@ App.Loaders.Playlists = Loader.$extend({
             "method": "getUserPlaylists",
             content: {
                 user: this.user.get("key"),
-                kind: "owned",
+                kind: this.$class.playlistKind,
                 start: start,
                 count: this.$class.ITEMS_PER_FETCH,
                 extras: ["tracks"]
@@ -42,6 +39,20 @@ App.Loaders.Playlists = Loader.$extend({
                 }
             }
         });
+    }
+});
+
+App.Loaders.Playlists = PlaylistLoader.$extend({
+    __classvars__: {
+        attrName: "playlists",
+        playlistKind: "owned"
+    }
+});
+
+App.Loaders.PlaylistsContributed = PlaylistLoader.$extend({
+    __classvars__: {
+        attrName: "playlists_contributed",
+        playlistKind: "collab"
     }
 });
 
