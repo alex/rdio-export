@@ -41,8 +41,8 @@ App.Components.StartExportComponent = Component.$extend({
         var options = [
             ["playlists", App.Loaders.Playlists],
             ["playlists-contributed", App.Loaders.PlaylistsContributed],
-            ["collection", App.Loaders.Collection]
-            // ["comments", null],
+            ["collection", App.Loaders.Collection],
+            ["comments", App.Loaders.Comments]
             // ["play-history", null]
         ];
         var loaders = [];

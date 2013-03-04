@@ -91,3 +91,39 @@ App.Loaders.Collection = Loader.$extend({
         });
     }
 });
+
+
+App.Loaders.Comments = Loader.$extend({
+    __classvars__: {
+        attrName: "comments"
+    },
+    load: function(component) {
+        this._requestComments(component, 0, true);
+    },
+    _requestComments: function(component, start, first) {
+        var self = this;
+        R.request({
+            "method": "getUserComments",
+            content: {
+                user: this.user.get("key"),
+                start: start,
+                count: this.$class.ITEMS_PER_FETCH
+            },
+            success: function(response) {
+                if (first) {
+                    component.updateTotal(response.result.totalCount);
+                }
+                component.updateLoaded(response.result.comments.length);
+                for (var idx in response.result.comments) {
+                    self.data.push(response.result.comments[idx]);
+                }
+                if (response.result.comments.length >= self.$class.ITEMS_PER_FETCH) {
+                    self._requestComments(component, start + self.$class.ITEMS_PER_FETCH);
+                }
+                else {
+                    component.finished();
+                }
+            }
+        });
+    }
+});
