@@ -11,6 +11,10 @@ App.Components.LogInComponent = Component.$extend({
         App.utils.stopEvent(e);
         R.authenticate(function(authenticated) {
             if (authenticated) {
+                Raven.setUser({
+                    email: R.currentUser.get("email"),
+                    id: R.currentUser.get("key")
+                });
                 new App.Components.StartExportComponent(this.$el, R.currentUser).render();
             }
             else {

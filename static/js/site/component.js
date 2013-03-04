@@ -16,9 +16,9 @@ var Component = Class.$extend({
     },
     _makeEventHandler: function(name) {
         var self = this;
-        return function() {
+        return Raven.wrap(function() {
             return self[name].apply(self, arguments);
-        };
+        });
     },
     getData: function(extraData) {
         return extraData;
