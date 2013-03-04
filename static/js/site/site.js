@@ -12,15 +12,17 @@ $(function() {
         alert("Sorry, this requires a browser which supports " +
             "window.URL.createObjectURL (see https://developer.mozilla.org/en-US/docs/DOM/window.URL.createObjectURL)");
     }
-    R.ready(Raven.wrap(function() {
-        plate.Template.Meta.registerFilter("get", function(obj, fieldName) {
-            return obj.get(fieldName);
-        });
-        if (R.authenticated()) {
-            new App.Components.StartExportComponent($(".body"), R.currentUser).render();
-        }
-        else {
-            new App.Components.LogInComponent($(".body")).render();
-        }
-    }));
+    else {
+        R.ready(Raven.wrap(function() {
+            plate.Template.Meta.registerFilter("get", function(obj, fieldName) {
+                return obj.get(fieldName);
+            });
+            if (R.authenticated()) {
+                new App.Components.StartExportComponent($(".body"), R.currentUser).render();
+            }
+            else {
+                new App.Components.LogInComponent($(".body")).render();
+            }
+        }));
+    }
 });
