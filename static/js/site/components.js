@@ -9,6 +9,7 @@ App.Components.LogInComponent = Component.$extend({
     },
     onLogInClicked: function(e) {
         App.utils.stopEvent(e);
+        var self = this;
         R.authenticate(function(authenticated) {
             if (authenticated) {
                 Raven.setUser({
@@ -16,7 +17,7 @@ App.Components.LogInComponent = Component.$extend({
                     username: R.currentUser.get("vanityName"),
                     id: R.currentUser.get("key")
                 });
-                new App.Components.StartExportComponent(this.$el, R.currentUser).render();
+                new App.Components.StartExportComponent(self.$el, R.currentUser).render();
             }
             else {
                 alert("You didn't log in. Why not? :(");
