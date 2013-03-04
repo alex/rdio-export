@@ -1,13 +1,13 @@
 <h3>Hello {{ user|get:"vanityName" }},</h3>
-<div id="export-body">
+<div class="export-body">
     <p>First you need to choose what data you want to export:</p>
     <form>
         <ul class="unstyled">
-            <li><label class="checkbox"><input type="checkbox" id="playlists" checked />Your playlists</label></li>
-            <li><label class="checkbox"><input type="checkbox" id="playlists-contributed" checked />Playlists you've contributed to</label></li>
-            <li><label class="checkbox"><input type="checkbox" id="collection" checked />Your collection</label></li>
-            <li><label class="checkbox"><input type="checkbox" id="comments" checked />Your comments</label></li>
-            <li><label class="checkbox"><input type="checkbox" id="play-history" disabled />Your play history</label></li>
+            <li><label class="checkbox"><input type="checkbox" class="playlists" checked />Your playlists</label></li>
+            <li><label class="checkbox"><input type="checkbox" class="playlists-contributed" checked />Playlists you've contributed to</label></li>
+            <li><label class="checkbox"><input type="checkbox" class="collection" checked />Your collection</label></li>
+            <li><label class="checkbox"><input type="checkbox" class="comments" checked />Your comments</label></li>
+            <li><label class="checkbox"><input type="checkbox" class="play-history" disabled />Your play history</label></li>
         </ul>
         <button type="submit" class="btn btn-primary export">Export!</button>
     </form>

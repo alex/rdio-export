@@ -49,11 +49,11 @@ App.Components.StartExportComponent = Component.$extend({
         for (var idx in options) {
             var name = options[idx][0];
             var loader = options[idx][1];
-            if (this.$el.find("#" + name).is(":checked")) {
+            if (this.$el.find("." + name).is(":checked")) {
                 loaders.push(new loader(this.user));
             }
         }
-        new App.Components.Export(this.$el.find("#export-body"), this.user, loaders).render();
+        new App.Components.Export(this.$el.find(".export-body"), this.user, loaders).render();
     }
 });
 
