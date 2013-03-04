@@ -1,6 +1,6 @@
 var Component = Class.$extend({
     __init__: function($el) {
-        this.$el = $el || null;
+        this.$el = $el;
         if (this.$class.events) {
             for (var evt in this.$class.events) {
                 var parts = evt.split(" ", 2);
