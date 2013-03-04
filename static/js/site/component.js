@@ -38,7 +38,7 @@ var Component = Class.$extend({
     },
     _renderTemplate: function(data) {
         var self = this;
-        new plate.Template(this.$class._loadedTemplate).render(data, function(err, data) {
+        new plate.Template(this.$class._loadedTemplate).render(data, Raven.wrap(function(err, data) {
             if (err) {
                 console.log(err);
             }
@@ -46,6 +46,6 @@ var Component = Class.$extend({
                 self.$el.html(data);
                 self.onRendered();
             }
-        });
+        }));
     }
 });
